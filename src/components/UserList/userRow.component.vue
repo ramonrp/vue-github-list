@@ -33,6 +33,8 @@ img {
 
 li {
   margin-bottom: 32px;
+  border: solid grey;
+  padding: 16px;
 }
 
 .img-wrapper {
@@ -43,6 +45,7 @@ li {
   display: flex;
   gap: 32px;
   align-items: center;
+  justify-content: space-between;
 }
 .username {
   color: black;

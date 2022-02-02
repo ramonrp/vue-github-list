@@ -1,10 +1,14 @@
 <template>
-  <input type="text" v-model="searchTerm" />
-  <button @click="onClickSearch">Search</button>
-  <div>
-    <button :disabled="page === 1" @click="prevPage">Prev</button>
-    {{ page }}
-    <button :disabled="userList.length < 30" @click="nextPage">Next</button>
+  <div class="filter">
+    <div class="search">
+      <input type="text" v-model="searchTerm" />
+      <button @click="onClickSearch">Search</button>
+    </div>
+    <div class="pagination">
+      <button :disabled="page === 1" @click="prevPage">Prev</button>
+      <span class="page">{{ page }}</span>
+      <button :disabled="userList.length < 30" @click="nextPage">Next</button>
+    </div>
   </div>
   <ul>
     <UserRow v-for="user of userList" :key="user.id" :user="user" />
@@ -19,7 +23,7 @@ import UserRow from "./userRow.component.vue";
 export default defineComponent({
   components: { UserRow },
   async setup() {
-    const searchTerm: Ref<string> = ref("microsoft");
+    const searchTerm: Ref<string> = ref("lemoncode");
     const userList: Ref<User[]> = ref([]);
     const page = ref<number>(1);
     userList.value = await githubService.getUsersByCompany(
@@ -54,8 +58,32 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-ul {
-  list-style: none;
+<style lang="scss" scoped>
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.search {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  & input {
+    width: 25vw;
+    max-width: 200px;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.page {
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 </style>
